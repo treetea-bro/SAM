@@ -13,6 +13,17 @@ from sam import SAM
 
 
 if __name__ == "__main__":
+    ADAPTIVE = True
+    BATCH_SIZE = 128
+    DEPTH = 16
+    DROP_OUT = 0.0
+    EPOCHS = 200
+    LABEL_SOOTHING = 0.1
+    LEARNING_RATE = 0.1
+    MOMENTUM = 0.9
+    THREADS = 2
+    WEIGHT_DECAY = 0.0005
+    WIDTH_FACTOR = 8
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--adaptive",
@@ -60,13 +71,13 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     initialize(args, seed=42)
-    # device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    # device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
 
     dataset = Cifar(args.batch_size, args.threads)
     log = Log(log_each=10)
     model = WideResNet(
-        args.depth, args.width_factor, args.dropout, in_channels=3, labels=10
+        args.depth, args.width_factor, args.dropout, in_channels=3, labels=100
     ).to(device)
 
     base_optimizer = torch.optim.SGD
