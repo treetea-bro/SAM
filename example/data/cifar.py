@@ -38,19 +38,6 @@ class Cifar:
             test_set, batch_size=batch_size, shuffle=False, num_workers=threads
         )
 
-        self.classes = (
-            "plane",
-            "car",
-            "bird",
-            "cat",
-            "deer",
-            "dog",
-            "frog",
-            "horse",
-            "ship",
-            "truck",
-        )
-
     def _get_statistics(self):
         train_set = torchvision.datasets.CIFAR100(
             root="./cifar", train=True, download=True, transform=transforms.ToTensor()
